@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins' ,sans-serif;
+  box-sizing: border-box;
+}
+body {
+  background:#454545;
+  color: #fff;
+}
+.container {
+  width: 100%;
+  height: 93vh;
+  padding: 20px;
+  display: flex;
+}
+
+.button-container {
+  width: 100%;
+  height: 5vh;
+  padding: 0px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.left, .right {
+  flex-basis: 100%;
+  padding: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 95%;
+  background: #1f1f1f;
+  color: #fff;
+  padding: 10px 20px;
+  border: 0;
+  outline: 0;
+  font-size: 18px;
+  resize: none;
+}
+
+textarea#output {
+  background: #fff;
+  color: #1f1f1f;
+}
+
+label i {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: auto;
+}
+
+button i {
+  margin-right: 10px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #000;
+  height: 30px;
+}
+
+.fa-clipboard {
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.code-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+#line-numbers {
+  padding: 10px 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: #1f1f1f;
+  width: 30px;
+  text-align: right;
+  /* margin-right: 5px; */
+  height: 95%;
+}
+
+textarea {
+  margin-left: 0px;
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 10px 20px;
+  flex-grow: 1;
+}
+
+#run-button {
+  background-color: #1f1f1f; 
+  color: #fff; 
+  padding: 5px 20px; 
+  border: none; 
+  cursor: pointer; 
+  border-radius: 5px; 
+  font-size: 16px; 
+}
+
+
+#run-button:hover {
+  background-color: #2f2f2f;
+}
