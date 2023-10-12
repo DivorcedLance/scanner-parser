@@ -1,4 +1,4 @@
-# Proyecto de implemetación de Scanner y Parser
+# Proyecto de implementación de Scanner y Parser
 
 ## Descripción
 
@@ -257,8 +257,204 @@ this.APD = {
 ### **3. Parser LL(1)**
 
 Se usa para analizar expresiones matemáticas, identificando estructuras como términos, factores y operadores.
+#### Gramática
+Para las expresiones algebraicas usaremos la gramática $G$ dada por la tupla $G = (N, T, P, E)$, donde $N$ es el conjunto de no terminales, $T_e$ es el conjunto de terminales, $P$ es el conjunto de reglas de producción y $E$ es el símbolo inicial.
 
----
+**Símbolos No Terminales:** 
+- $N = \{E, T, F, G\}$
+
+**Símbolos Terminales:** 
+- $T_e = \{+, -, *, /, \hat{}, (, ), \text{ID}, \text{NUM}\}$
+
+**Reglas de Producción:** 
+$$
+\begin{aligned}
+E &\implies T+E \\
+&\implies T-E \\
+&\implies T \\
+T &\implies F*T \\
+&\implies F/T \\
+&\implies F \\
+F &\implies G \^ F \\
+ &\implies G \\
+G &\implies (E)\\
+ &\implies ID\\
+ &\implies NUM\\
+\end{aligned}
+$$
+
+#### Factorización
+Para evitar ambigüedades y preparar nuestra gramática para el análisis LL(1), hemos factorizado la gramática original:
+
+$$
+\begin{aligned}
+&1. &E &\implies TX \\
+X\\
+&2. &X &\implies +E \\
+&3. &X &\implies -E \\
+&4. &X &\implies \lambda \\
+\\
+&5. &T &\implies FY \\
+Y\\
+&6. &Y &\implies *T \\
+&7. &Y &\implies /T \\
+&8. &Y &\implies \lambda \\
+\\
+&9. &F &\implies GZ \\
+Z\\
+&10. &Z &\implies \^F \\
+&11. &Z &\implies \lambda \\
+G\\
+&12. &G &\implies (E) \\
+&13. &G &\implies ID \\
+&14. &G &\implies NUM \\
+\end{aligned}
+$$
+
+#### Conjuntos de Símbolos Directores
+Los conjuntos de símbolos directores nos ayudan a tomar decisiones en el análisis sintáctico descendente, indicando cuándo aplicar una regla particular:
+
+$$
+\begin{aligned}
+& SD(2) &= &\{+\} \\
+& SD(3) &= &\{-\} \\
+& SD(4) &= &\{EOF, \n, )\} \\
+& SD(6) &= &\{*\} \\
+& SD(7) &= &\{/\} \\
+& SD(8) &= &\{+,-,EOF, \n, )\} \\
+& SD(10) &= &\{\^\} \\
+& SD(11) &= &\{*,/,+,-,EOF, \n, )\} \\
+& SD(12) &= &\{(\} \\
+& SD(13) &= &\{ID\} \\
+& SD(14) &= &\{NUM\} \\
+\end{aligned}
+$$
+
+Con esto ya podemos implementar el parser LL(1) en nuestro código:
+
+```js
+  
+evaluarExpresion() {
+// Verifica que la expresión sea válida utilizando el parser LL(1)
+  try {
+    this.E();
+  } catch (error) {
+    return false;   
+  }
+  return true;
+}
+  
+// Método E
+E() {
+  this.T();
+  this.X();
+}
+
+// Método X
+X() {
+  switch (this.currentToken.value) {
+	  case '+':
+		  this.match('+');
+		  this.E();
+		  break;
+	  case '-':
+		  this.match('-');
+		  this.E();
+		  break;
+	  case 'EOF':
+	  case '\n':
+	  case ',':
+	  case '<':
+	  case '>':
+	  case ')':
+		  // Lambda
+		  break;
+	  default:
+		  throw new Error(`Token innesperado en X: "${this.currentToken.value}"`);
+  }
+}
+
+// Método T
+T() {
+  this.F();
+  this.Y();
+}
+
+// Método Y
+Y() {
+  switch (this.currentToken.value) {
+	  case '*':
+		  this.match('*');
+		  this.T();
+		  break;
+	  case '/':
+		  this.match('/');
+		  this.T();
+		  break;
+	  case '+':
+	  case '-':
+	  case 'EOF':
+	  case '\n':
+	  case ',':
+	  case '<':
+	  case '>':
+	  case ')':
+		  // Lambda
+		  break;
+	  default:
+		  throw new Error(`Token innesperado en Y: "${this.currentToken.value}"`);
+  }
+}
+
+// Método F
+F() {
+  this.G();
+  this.Z();
+}
+
+// Método Z
+Z() {
+  switch (this.currentToken.value) {
+	  case '^':
+		  this.match('^');
+		  this.F();
+		  break;
+	  case '*':
+	  case '/':
+	  case '+':
+	  case '-':
+	  case 'EOF':
+	  case '\n':
+	  case ',':
+	  case '<':
+	  case '>':
+	  case ')':
+		  // Lambda
+		  break;
+	  default:
+		  throw new Error(`Token innesperado en Z: "${this.currentToken.value}"`);
+  }
+}
+
+// Método G
+G() {
+  switch (this.currentToken.value) {
+	  case '(':
+		  this.match('(');
+		  this.E();
+		  this.match(')');
+		  break;
+	  case 'ID':
+		  this.match('ID');
+		  break;
+	  case 'NUM':
+		  this.match('NUM');
+		  break;
+	  default:
+		  throw new Error(`Token innesperado en G: "${this.currentToken.value}"`);
+  }
+}
+```
 
 ### **Funciones Clave**
 
