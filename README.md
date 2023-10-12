@@ -315,21 +315,7 @@ $$
 #### Conjuntos de Símbolos Directores
 Los conjuntos de símbolos directores nos ayudan a tomar decisiones en el análisis sintáctico descendente, indicando cuándo aplicar una regla particular:
 
-$$
-\begin{aligned}
-& SD(2) &= &\{+\} \\
-& SD(3) &= &\{-\} \\
-& SD(4) &= &\{EOF, \\n, )\} \\
-& SD(6) &= &\{*\} \\
-& SD(7) &= &\{/\} \\
-& SD(8) &= &\{+,-,EOF, \\n, )\} \\
-& SD(10) &= &\{^\} \\
-& SD(11) &= &\{*,/,+,-,EOF, \\n, )\} \\
-& SD(12) &= &\{(\} \\
-& SD(13) &= &\{ID\} \\
-& SD(14) &= &\{NUM\} \\
-\end{aligned}
-$$
+![Simbolos Directores](diagramas/Simbolos_directores.png)
 
 Con esto ya podemos implementar el parser LL(1) en nuestro código:
 
