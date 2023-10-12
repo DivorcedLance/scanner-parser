@@ -1,5 +1,5 @@
 export function displayError(typeError, token, info='') {
-  let messageError;
+  // Asignar un valor legible al token de error
   if (token.value === "\n") {
     token.valuePrint = "\\n";
   } else if (token.value === " ") {
@@ -9,6 +9,9 @@ export function displayError(typeError, token, info='') {
   } else {
     token.valuePrint = token.value;
   }
+  let messageError;
+  
+  // Asignar un mensaje de error dependiendo del tipo de error
   if (typeError === "Error Léxico") {
     messageError = `El lexema '${token.valuePrint}' es desconocido.`;
   } else if (typeError === "Error Sintáctico") {
@@ -23,10 +26,9 @@ export function displayError(typeError, token, info='') {
   }
   codeArea.focus();
   codeArea.setSelectionRange(token.index, token.index);
-  // console.error(`${typeError} en linea ${token.linea}, columna ${token.index-startPos}: ${messageError}`);
-  const output = document.getElementById('output');
   
   // Mostrar el mensaje en el textarea de salida
+  const output = document.getElementById('output');
   output.value += `${typeError} en linea ${token.linea}, columna ${token.index-startPos}: ${messageError}\n`;
 }
   

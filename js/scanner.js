@@ -34,23 +34,29 @@ export class Scanner {
       const char = this.code[i];
 
       if (char === '\n') {
+        // Si el caracter es un salto de línea, clasificar el lexema y reiniciar el contador de líneas.
         if (lexema) {
           yield this.clasificarLexema(lexema, i);
           lexema = "";
         }
+        // Clasificar el salto de línea y continuar.
         yield this.clasificarLexema('\n', i);
         this.linea++;
       } else if (char.match(/[\s,()=+\-*/^<>|&]/)) {
         if (lexema) {
+          // Si el caracter es un espacio o un símbolo, clasificar el lexema y continuar.
           yield this.clasificarLexema(lexema, i);
           lexema = "";
         }
         if (!char.match(/\s/)) {
+          // Si el caracter es un símbolo, clasificar el lexema del símbolo y continuar.
           yield this.clasificarLexema(char, i+1);
         }
       } else if (char.match(/[a-zA-Z0-9\.]/)) {
+        // Si el caracter es un número o una letra, añadirlo al lexema.
         lexema += char;
       } else if (char) {
+        // Si el caracter es desconocido, clasificar el lexema y continuar.
         yield this.clasificarLexema(char, i+1);
       }
     }
@@ -87,6 +93,7 @@ export class Scanner {
     return tokenDesconocido;
   }
 
+  // Método para obtener el siguiente token.
   getToken() {
     if (!this.tokenGenerator) {
         this.tokenGenerator = this.getGenerator();
@@ -103,7 +110,9 @@ export class Scanner {
       } else {
         return this.getToken();
       }
+    } else {
+      // Si se llega al final del archivo, devolver un token EOF.
+      return { type: this.TokenType.EOF, value: 'EOF', linea: this.linea, index: this.code.length };
     }
-    return { type: this.TokenType.EOF, value: 'EOF', linea: this.linea, index: this.code.length };
   }
 }

@@ -51,17 +51,6 @@ function update_lines() {
 }
 document.addEventListener("DOMContentLoaded", update_lines);
 
-// Evento para ejecutar el compilador con Ctrl+Enter
-document.addEventListener('keydown', function(event) {
-  if (event.ctrlKey && event.code === 'Enter') {
-      run();
-  }
-});
-
-// Añadimos un evento de clic al botón para ejecutar el compilador
-const runButton = document.getElementById('run-button');
-runButton.addEventListener('click', run);
-
 // Función para copiar texto al portapapeles
 async function copyToClipboard(textAreaId) {
   const textArea = document.getElementById(textAreaId);
@@ -74,7 +63,17 @@ async function copyToClipboard(textAreaId) {
   }
 }
 
+// Evento para ejecutar el compilador con Ctrl+Enter
+document.addEventListener('keydown', function(event) {
+  if (event.ctrlKey && event.code === 'Enter') {
+      run();
+  }
+});
+
 // Obtener botones y añadir eventos de clic
+
+document.getElementById('run-button').addEventListener('click', run);
+
 document.getElementById('copy-code-button').addEventListener('click', function() {
   copyToClipboard('code');
 });

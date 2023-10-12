@@ -1,6 +1,6 @@
 import { displayError } from './error.js';
 
-// Clase Parser que evalúa la sintaxis de los tokens utilizando Autómatas de Pila Determinista (APD) y Autómatas Finitos Deterministas (AFD)
+// Clase Parser que evalúa la sintaxis de los tokens utilizando Autómatas de Pila Determinista (APD), Autómatas Finitos Deterministas (AFD) y un parser LL(1)
 export class Parser {
   constructor(scanner) {
 
@@ -43,9 +43,9 @@ export class Parser {
       'estado_final': ['qf']
     };
     
-    // AFD4 para condicionales
+    // AFD4 para condiciones
     this.AFD4 = {
-      'name': 'condicional',
+      'name': 'condición',
       'q0': { '(': 'q1' },
       'q1': { 'EXP': 'q2' },
       'q2': { '<': 'q3', '>': 'q3' },
@@ -56,6 +56,7 @@ export class Parser {
     };
     
     // Definición del autómata de pila (APD) para estructuras de control
+
     this.APD = {
       'q0': {
         'si': { 'P0': { 'estado': 'q0', 'pila': '+' }, '-': { 'estado': 'q0', 'pila': '+' } },
@@ -67,10 +68,12 @@ export class Parser {
     };
   }
 
-  getToken() {
+ // Pide el siguiente token al scanner y lo guarda en currentToken
+ getToken() {
     this.currentToken = this.scanner.getToken();
   }
 
+  // Evalúa un AFD dado
   evaluarAFD(afd) {
     let estado = 'q0';
     do {
@@ -94,6 +97,7 @@ export class Parser {
     return afd['estado_final'].includes(estado);
   }
   
+  // Evalúa el APD de estructuras de control
   evaluarAPD() {
     let topePila = this.pila[this.pila.length - 1];
     const transicion = this.APD[this.estadoAPD][this.currentToken.value][topePila.value] || this.APD[this.estadoAPD][this.currentToken.value]['-'];
@@ -109,25 +113,28 @@ export class Parser {
     }
   }
   
+  // Actualiza la pila del APD
   actualizarPila(tokenApilado) {
     switch (tokenApilado) {
-      case "&":
+      case "&": // Se desempila el token que está en el tope de la pila
         this.pila.pop();
         break;
-      case "&&":
+      case "&&": // Se desempilan los dos tokens que están en el tope de la pila
         this.pila.pop();
         this.pila.pop();
         break;
-      case "+":
+      case "+": // Se apila el token actual
         this.pila.push(this.currentToken);
         break;
-      // En el caso de que el token sea - no se hace nada
+      case "-": // En el caso de que el token sea - no se hace nada
+        break;
       default:
         break;
     }
   }
   
   evaluarFinalAPD() {
+    // Verifica que la pila esté vacía al final del análisis
     if (this.pila[this.pila.length-1].value !== 'P0') {
       // En caso de error
       displayError("Error Sintáctico", this.pila[this.pila.length-1], `Error de estructura de control`);
@@ -137,6 +144,7 @@ export class Parser {
   }
 
   evaluarExpresion() {
+    // Verifica que la expresión sea válida utilizando el parser LL(1)
     try {
       this.E();
     } catch (error) {
@@ -145,8 +153,8 @@ export class Parser {
     return true;
   }
 
-  // Función de utilidad para consumir un token
   match(expectedToken) {
+    // Función de utilidad para consumir un token
     if (this.currentToken.value === expectedToken) {
         this.currentToken = this.scanner.getToken();
     } else {
@@ -154,6 +162,7 @@ export class Parser {
     }
   }
 
+  // ---- Parser LL(1) ----
   // Método E
   E() {
       this.T();
@@ -268,12 +277,15 @@ export class Parser {
   // Método principal para el análisis sintáctico
   parse() {
     this.getToken();
+    // Se evalúan los tokens hasta llegar al final del archivo
     while (this.currentToken && this.currentToken.type !== "EOF") {
       let success = false;
 
       // Se decide qué técnica usar basándose en el token actual
       if (["si", "sino", "fsi", "mientras", "fmientras"].includes(this.currentToken.value)) {
+        // Se evalúa el APD de estructuras de control
         if (this.currentToken.value === "si" || this.currentToken.value === "mientras") {
+          // Se evalúa el AFD de condiciones
           success = this.evaluarAPD(this.currentToken) && this.evaluarAFD(this.AFD4);
         } else {
           success = this.evaluarAPD(this.currentToken);
@@ -288,11 +300,14 @@ export class Parser {
         }
         
       } else if (this.currentToken.value === "entero" || this.currentToken.value === "real") {
-        success = this.evaluarAFD(this.AFD1, [this.currentToken]);
+        // Se evalúa el AFD de declaración de variables
+        success = this.evaluarAFD(this.AFD1);
       } else if (this.currentToken.value === "imprime") {
-        success = this.evaluarAFD(this.AFD2, [this.currentToken]);
+        // Se evalúa el AFD de la función imprime
+        success = this.evaluarAFD(this.AFD2);
       } else if (this.currentToken.value === "ID") {
-        success = this.evaluarAFD(this.AFD3, [this.currentToken]);
+        // Se evalúa el AFD de asignaciones
+        success = this.evaluarAFD(this.AFD3);
       }
 
       if (!success) {

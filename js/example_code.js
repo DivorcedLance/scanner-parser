@@ -1,3 +1,4 @@
+// Lista de códigos de ejemplo para el editor
 export let example_code_list = [
   `entero a,b=3
   real x=2.1 ,y=8.4
@@ -70,6 +71,7 @@ export let example_code_list = [
   `,
 ]
 
+// Función para obtener un código de ejemplo
 export function get_example_code(index = -1) {
   if (index >= 0 && index < example_code_list.length) {
     return example_code_list[index];
