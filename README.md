@@ -44,6 +44,21 @@ El área de código tiene un área de texto que se puede utilizar para ingresar 
 
 El área de salida tiene un área de texto que se utiliza para mostrar los resultados del análisis. También tiene un botón para copiar el texto de salida al portapapeles.
 
+## Descripción de la implementación
+
+El proceso de análisis de código se ejecuta a través de la función `run`, que actúa como un conductor que guía el flujo del código a través de varias etapas, desde su entrada hasta la producción de un resultado. Aquí te presento un desglose paso a paso:
+
+* El scanner genera uno por uno tokens a partir del código dado. Cada token tiene un tipo y un valor, además de la información para ubicarlo en el código fuente. 
+  * Si el token es desconocido, se genera un error léxico. 
+  * Si se llega al final del código fuente, se genera un token especial `EOF` que indica el final del archivo.
+* El parser identifica qué autómata o parser secundario debe ser llamado para procesar los tokens.
+* Cuando se encuentra un token inicial, se llama al AFD o APD correspondiente para evaluar la secuencia de tokens.
+  - En el caso de los AFD se usa el método `evaluarAFD` para evaluar la secuencia de tokens. Este método genera un error si la secuencia no sigue las reglas del AFD. Además en el caso de que en el estado actual tengamos una transición valida usando una expresión se usará el parser secundario LL(1) a través del método `evaluarExpresion` para evaluarla.
+  - En el caso del APD se usa el método `evaluarAPD` para evaluar la secuencia de tokens. El APD se encarga principalmente de las estructuras de control, como "si", "sino", "mientras" y sus respectivas finalizaciones. Este método genera un error si la secuencia no sigue las reglas del APD. Además en el caso de que la estructura requiera una condicional se llamará al `AFD4` para evaluar la condicional.
+* Si el AFD o APD reconoce la estructura, el parser principal continúa con el siguiente token como inicial.
+* Si en algún momento se genera un error, el parser principal se detiene y se muestra el mensaje de error.
+* Si el parser principal llega al final del código fuente, se muestra un mensaje de éxito.
+
 ## Implementación del scanner
 
 El scanner, también conocido como analizador léxico, es responsable de transformar el código fuente en una secuencia de tokens, que se utilizan posteriormente en el análisis sintáctico.
@@ -471,21 +486,6 @@ G() {
 #### **parse()**
 - Función principal del analizador.
 - Itera a través de los tokens y, basándose en el token actual, decide qué técnica (AFD, APD, LL(1)) usar.
-
-## Descripción de la implementación
-
-El proceso de análisis de código se ejecuta a través de la función `run`, que actúa como un conductor que guía el flujo del código a través de varias etapas, desde su entrada hasta la producción de un resultado. Aquí te presento un desglose paso a paso:
-
-* El scanner genera uno por uno tokens a partir del código dado. Cada token tiene un tipo y un valor, además de la información para ubicarlo en el código fuente. 
-  * Si el token es desconocido, se genera un error léxico. 
-  * Si se llega al final del código fuente, se genera un token especial `EOF` que indica el final del archivo.
-* El parser identifica qué autómata o parser secundario debe ser llamado para procesar los tokens.
-* Cuando se encuentra un token inicial, se llama al AFD o APD correspondiente para evaluar la secuencia de tokens.
-  - En el caso de los AFD se usa el método `evaluarAFD` para evaluar la secuencia de tokens. Este método genera un error si la secuencia no sigue las reglas del AFD. Además en el caso de que en el estado actual tengamos una transición valida usando una expresión se usará el parser secundario LL(1) a través del método `evaluarExpresion` para evaluarla.
-  - En el caso del APD se usa el método `evaluarAPD` para evaluar la secuencia de tokens. El APD se encarga principalmente de las estructuras de control, como "si", "sino", "mientras" y sus respectivas finalizaciones. Este método genera un error si la secuencia no sigue las reglas del APD. Además en el caso de que la estructura requiera una condicional se llamará al `AFD4` para evaluar la condicional.
-* Si el AFD o APD reconoce la estructura, el parser principal continúa con el siguiente token como inicial.
-* Si en algún momento se genera un error, el parser principal se detiene y se muestra el mensaje de error.
-* Si el parser principal llega al final del código fuente, se muestra un mensaje de éxito.
 
 ## Implementación en Código
 
