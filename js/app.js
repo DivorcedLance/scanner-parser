@@ -22,7 +22,7 @@ function run() {
   }
 }
 
-// ---- Manejo del JS de la página ----
+// ----- Manejo del JS de la página -----
 
 // Al cargar el DOM, añadimos eventos para manejar las líneas
 function update_lines() {
