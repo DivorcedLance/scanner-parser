@@ -1,74 +1,57 @@
 // Lista de códigos de ejemplo para el editor
 export let example_code_list = [
-  `entero a,b=3
-  real x=2.1 ,y=8.4
-  si (a>b)
-    x=3
-    b=4
-  sino
-    mientras (b<7)
-      y=9
-    fmientras
+  `entero num=0, total=10
+mientras (num<total)
+  num = num + 2
+  si (num>5)
+    total = total + 1
   fsi
-  imprime a,b,x`,
+fmientras
+imprime num, total`,
 
-  `real altura,peso=72.5
-  si (peso>70)
-    altura=1.80
-  sino
-    altura=1.65
+`entero contador=0, suma=0, limite=10
+mientras (contador<limite)
+  contador = contador + 1
+  suma = suma + contador
+  si (suma>25)
+    suma = suma - contador
   fsi
-  imprime altura,peso`,
+fmientras
+imprime contador, suma
+`,
 
-  `entero i,j=0
-  mientras (i<10)
-    i=i+1
-    j=j+2
-  fmientras
-  imprime i,j`,
-  `entero cont1=0,cont2=1
-  si (cont1<cont2)
-    cont1=1
-    cont2=2
+`real radio=5, area=0, pi=3.14
+si (radio > 0)
+  area = pi * radio^2
+  si (area > 50)
+    area = 50
   fsi
-  imprime cont1,cont2`,
+fsi
+imprime area`,
 
-  `real calificacion, promedio=0
-  si (calificacion>6)
-    promedio=calificacion
-  sino
-    mientras (promedio<6)
-      calificacion=calificacion+1
-      promedio=calificacion
-    fmientras
-  fsi
-  imprime promedio`,
-
-  `real x = 9.45, y = 8.2
-  si (a>b)
-    x=3
-    b=4
-  sino
-    mientras (b<7)
-      y=9
-    fmientras
-  fsi
-  imprime a,b,x
-  `,
-
-  `real a,b,c=0
-  a=1
-  b=2
-  mientras (b-a>0.01)
-    c=(a+b)/2
-    si (fa*fc<0)
-      b=c
-    sino
-      a=c
+`entero i=0, j=10, k=0
+mientras (i<5)
+  i = i + 1
+  mientras (j>i)
+    j = j - 1
+    si (i + j > 10)
+      k = i + j
     fsi
   fmientras
-  imprime c
-  `,
+fmientras
+imprime i, j, k`,
+
+`real saldo=1000, retiro=500
+si (saldo > retiro)
+  saldo = saldo - retiro
+  si (saldo < 300)
+    retiro = 100
+  fsi
+sino
+  retiro = 0
+fsi
+imprime saldo, retiro`,
+
 ]
 
 // Función para obtener un código de ejemplo
