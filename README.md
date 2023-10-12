@@ -276,7 +276,7 @@ E &\implies T+E \\
 T &\implies F*T \\
 &\implies F/T \\
 &\implies F \\
-F &\implies G ^ F \\
+F &\implies G \hat{} F \\
  &\implies G \\
 G &\implies (E)\\
  &\implies ID\\
@@ -303,7 +303,7 @@ $$
 \\
 &9. &F &\implies GZ \\
 \\
-&10. &Z &\implies ^F \\
+&10. &Z &\implies \hat{}F \\
 &11. &Z &\implies \lambda \\
 \\
 &12. &G &\implies (E) \\
