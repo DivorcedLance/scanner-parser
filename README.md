@@ -315,7 +315,7 @@ $$
 #### Conjuntos de Símbolos Directores
 Los conjuntos de símbolos directores nos ayudan a tomar decisiones en el análisis sintáctico descendente, indicando cuándo aplicar una regla particular:
 
-![Simbolos Directores](diagramas/Simbolos_directores.png)
+![Simbolos Directores](diagramas/SimbolosDirectores.png)
 
 Con esto ya podemos implementar el parser LL(1) en nuestro código:
 
