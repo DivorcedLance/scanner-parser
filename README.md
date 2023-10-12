@@ -34,7 +34,7 @@ cd scanner-parser
 
 La interfaz de usuario se divide en dos secciones principales: el área de código y el área de salida. El área de código se utiliza para ingresar el código fuente y el área de salida se utiliza para mostrar los resultados del análisis.
 
-<!-- TODO: Añadir imagen de la interfaz de usuario -->
+![Captura de Pantalla de la Página](img/PageScreeshot.png)
 
 ### Área de Código
 
@@ -107,7 +107,7 @@ Estos se utilizan para reconocer estructuras simples como declaraciones de varia
 
 #### AFD1: Declaración de Variables
 
-![AFD1](diagramas/AFD1.png)
+![AFD1](img/AFD1.png)
 
 $$
 \begin{aligned}
@@ -140,7 +140,7 @@ this.AFD1 = {
 
 #### AFD2: Función imprime
 
-![AFD2](diagramas/AFD2.png)
+![AFD2](img/AFD2.png)
 
 $$
 \begin{aligned}
@@ -166,7 +166,7 @@ this.AFD2 = {
 
 #### AFD3: Asignación
 
-![AFD3](diagramas/AFD3.png)
+![AFD3](img/AFD3.png)
 
 $$
 \begin{aligned}
@@ -193,7 +193,7 @@ this.AFD3 = {
 
 #### AFD4: Condición
 
-![AFD4](diagramas/AFD4.png)
+![AFD4](img/AFD4.png)
 
 $$
 \begin{aligned}
@@ -315,7 +315,7 @@ $$
 #### Conjuntos de Símbolos Directores
 Los conjuntos de símbolos directores nos ayudan a tomar decisiones en el análisis sintáctico descendente, indicando cuándo aplicar una regla particular:
 
-![Simbolos Directores](diagramas/SimbolosDirectores.png)
+![Simbolos Directores](img/SimbolosDirectores.png)
 
 Con esto ya podemos implementar el parser LL(1) en nuestro código:
 
