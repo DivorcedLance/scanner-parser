@@ -107,7 +107,7 @@ Estos se utilizan para reconocer estructuras simples como declaraciones de varia
 
 #### AFD1: Declaración de Variables
 
-![[diagramas/AFD1.png]]
+![AFD1](diagramas/AFD1.png)
 
 $$
 \begin{aligned}
@@ -140,7 +140,8 @@ this.AFD1 = {
 
 #### AFD2: Función imprime
 
-![[diagramas/AFD2.png]]
+![AFD2](diagramas/AFD2.png)
+
 $$
 \begin{aligned}
 q0, \text{imprime} \implies q1 \\
@@ -165,7 +166,8 @@ this.AFD2 = {
 
 #### AFD3: Asignación
 
-![[diagramas/AFD3.png]]
+![AFD3](diagramas/AFD3.png)
+
 $$
 \begin{aligned}
 q0, \text{ID} \implies q1 \\
@@ -191,7 +193,7 @@ this.AFD3 = {
 
 #### AFD4: Condición
 
-![[diagramas/AFD4.png]]
+![AFD4](diagramas/AFD4.png)
 
 $$
 \begin{aligned}
