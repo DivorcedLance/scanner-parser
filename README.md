@@ -266,7 +266,8 @@ Para las expresiones algebraicas usaremos la gramática $G$ dada por la tupla $G
 **Símbolos Terminales:** 
 - $T_e = \{+, -, *, /, \hat{}, (, ), \text{ID}, \text{NUM}\}$
 
-**Reglas de Producción:** 
+**Reglas de Producción:**
+
 $$
 \begin{aligned}
 E &\implies T+E \\
@@ -275,7 +276,7 @@ E &\implies T+E \\
 T &\implies F*T \\
 &\implies F/T \\
 &\implies F \\
-F &\implies G \^ F \\
+F &\implies G ^ F \\
  &\implies G \\
 G &\implies (E)\\
  &\implies ID\\
@@ -302,7 +303,7 @@ Y\\
 \\
 &9. &F &\implies GZ \\
 Z\\
-&10. &Z &\implies \^F \\
+&10. &Z &\implies ^F \\
 &11. &Z &\implies \lambda \\
 G\\
 &12. &G &\implies (E) \\
