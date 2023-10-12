@@ -239,8 +239,8 @@ q0, \$, \text{PO} &\implies qf, - \\
 \end{aligned}
 $$
 
-Estado inicial: q0  
-Estados finales: qf
+Estado inicial: $q0$
+Estados finales: $qf$
 
 ```js
 this.APD = {
@@ -475,8 +475,6 @@ G() {
 ## Descripción de la implementación
 
 El proceso de análisis de código se ejecuta a través de la función `run`, que actúa como un conductor que guía el flujo del código a través de varias etapas, desde su entrada hasta la producción de un resultado. Aquí te presento un desglose paso a paso:
-
-## Descripción de la implementación
 
 * El scanner genera uno por uno tokens a partir del código dado. Cada token tiene un tipo y un valor, además de la información para ubicarlo en el código fuente. 
   * Si el token es desconocido, se genera un error léxico. 
