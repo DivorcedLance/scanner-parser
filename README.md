@@ -274,7 +274,7 @@ this.APD = {
 
 Se usa para analizar expresiones matemáticas, identificando estructuras como términos, factores y operadores.
 #### Gramática
-Para las expresiones algebraicas usaremos la gramática $G$ dada por la tupla $G = (N, T, P, E)$, donde $N$ es el conjunto de no terminales, $T_e$ es el conjunto de terminales, $P$ es el conjunto de reglas de producción y $E$ es el símbolo inicial.
+Para las expresiones algebraicas usaremos la gramática $G$ dada por la tupla $G = (N, T_e, P, E)$, donde $N$ es el conjunto de no terminales, $T_e$ es el conjunto de terminales, $P$ es el conjunto de reglas de producción y $E$ es el símbolo inicial.
 
 **Símbolos No Terminales:** 
 - $N = \{E, T, F, G\}$
