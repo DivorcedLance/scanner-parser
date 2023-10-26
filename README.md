@@ -32,9 +32,10 @@ cd scanner-parser
 
 ## Interfaz de Usuario
 
-La interfaz de usuario se divide en dos secciones principales: el área de código y el área de salida. El área de código se utiliza para ingresar el código fuente y el área de salida se utiliza para mostrar los resultados del análisis.
+La interfaz de usuario se divide en dos secciones principales: el área de código y el área de salida. El área de código se utiliza para ingresar el código fuente y el área de salida se utiliza para mostrar los resultados del análisis. Además, se tienen botones para usar códigos de ejemplo, para copiar al portapapeles el código del editor y para copiar el output en la salida.
 
-![Captura de Pantalla de la Página](img/PageScreeshot.png)
+![Captura de Pantalla de la Página](img/PageScreeshot02.png)
+![Captura de Pantalla de la Página](img/PageScreeshot03.png)
 
 ### Área de Código
 
@@ -46,7 +47,7 @@ El área de salida tiene un área de texto que se utiliza para mostrar los resul
 
 ## Descripción de la implementación
 
-El proceso de análisis de código se ejecuta a través de la función `run`, que actúa como un conductor que guía el flujo del código a través de varias etapas, desde su entrada hasta la producción de un resultado. Aquí te presento un desglose paso a paso:
+El proceso de análisis de código se ejecuta a través de la función `run`, que guía el flujo del código a través de varias etapas, desde su entrada hasta la producción de un resultado.
 
 * El scanner genera uno por uno tokens a partir del código dado. Cada token tiene un tipo y un valor, además de la información para ubicarlo en el código fuente. 
   * Si el token es desconocido, se genera un error léxico. 
@@ -56,8 +57,8 @@ El proceso de análisis de código se ejecuta a través de la función `run`, qu
   - En el caso de los AFD se usa el método `evaluarAFD` para evaluar la secuencia de tokens. Este método genera un error si la secuencia no sigue las reglas del AFD. Además en el caso de que en el estado actual tengamos una transición valida usando una expresión se usará el parser secundario LL(1) a través del método `evaluarExpresion` para evaluarla.
   - En el caso del APD se usa el método `evaluarAPD` para evaluar la secuencia de tokens. El APD se encarga principalmente de las estructuras de control, como "si", "sino", "mientras" y sus respectivas finalizaciones. Este método genera un error si la secuencia no sigue las reglas del APD. Además en el caso de que la estructura requiera una condicional se llamará al `AFD4` para evaluar la condicional.
 * Si el AFD o APD reconoce la estructura, el parser principal continúa con el siguiente token como inicial.
-* Si en algún momento se genera un error, el parser principal se detiene y se muestra el mensaje de error.
-* Si el parser principal llega al final del código fuente, se muestra un mensaje de éxito.
+* Si en algún momento se genera un error, el parser principal se detiene, se muestra el mensaje de error y el cursor del editor va al token que ocasionó el error.
+* Si el parser principal llega al final del código fuente sin errores, se muestra un mensaje de éxito.
 
 ## Implementación del scanner
 

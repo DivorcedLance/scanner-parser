@@ -52,6 +52,17 @@ sino
 fsi
 imprime saldo, retiro`,
 
+`real num1=5.5, num2=2.2, resultado=0
+si (num1 > num2)
+  resultado = ((num1 * num2) + (num1 / num2) - (num2^2) + (3.0 * (num2 + 2))) / (2.5 + (num1 - num2))
+  si (resultado < 0)
+    resultado = resultado * (0-1)
+  fsi
+sino
+  resultado = ((num2 * num1) - (num1 / (num2 + 1))) * (4^2) / (2.0 + (num1 * 3))
+fsi
+imprime resultado`,
+
 ]
 
 // Función para obtener un código de ejemplo
